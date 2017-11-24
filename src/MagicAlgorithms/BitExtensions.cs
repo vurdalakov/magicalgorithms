@@ -5,7 +5,7 @@ namespace Vurdalakov
 {
     public static class BitExtensions
     {
-        // IsOnlyOneBitSet ------------------------------------------------------------------------
+        // IsOnlyOneBitSet --------------------------------------------------------------------------------------------------------------------------
 
         /// <summary>
         /// Detects if only one bit is set in an Int32 integer.
@@ -73,6 +73,59 @@ namespace Vurdalakov
             }
 
             throw new ArgumentException($"Enumeration underlying type is not supported ({underlyingType.FullName})");
+        }
+
+        // GetMostSignificantBitSet -----------------------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Returns the most significant 1 bit of the given Int32 value.
+        /// </summary>
+        /// <param name="value">Value to test.</param>
+        /// <returns>The most significant 1 bit (highest numbered element of a bit set).</returns>
+        public static UInt32 GetMostSignificantBitSet(this Int32 value)
+        {
+            return GetMostSignificantBitSet(unchecked((UInt32)value));
+        }
+
+        /// <summary>
+        /// Returns the most significant 1 bit of the given UInt32 value.
+        /// </summary>
+        /// <param name="value">Value to test.</param>
+        /// <returns>The most significant 1 bit (highest numbered element of a bit set).</returns>
+        public static UInt32 GetMostSignificantBitSet(this UInt32 value)
+        {
+            value |= (value >> 1);
+            value |= (value >> 2);
+            value |= (value >> 4);
+            value |= (value >> 8);
+            value |= (value >> 16);
+            return (value & ~(value >> 1));
+        }
+
+        /// <summary>
+        /// Returns the most significant 1 bit of the given Int64 value.
+        /// </summary>
+        /// <param name="value">Value to test.</param>
+        /// <returns>The most significant 1 bit (highest numbered element of a bit set).</returns>
+        public static UInt64 GetMostSignificantBitSet(this Int64 value)
+        {
+            return GetMostSignificantBitSet(unchecked((UInt64)value));
+        }
+
+        /// <summary>
+        /// Returns the most significant 1 bit of the given UInt64 value.
+        /// </summary>
+        /// <param name="value">Value to test.</param>
+        /// <returns>The most significant 1 bit (highest numbered element of a bit set).</returns>
+        public static UInt64 GetMostSignificantBitSet(this UInt64 value)
+        {
+            value |= (value >> 1);
+            value |= (value >> 2);
+            value |= (value >> 4);
+            value |= (value >> 8);
+            value |= (value >> 16);
+            value |= (value >> 32);
+            return (value & ~(value >> 1));
         }
     }
 }

@@ -8,7 +8,7 @@ namespace VurdalakovTests
     [TestClass]
     public class BitExtensionsTests
     {
-        // IsOnlyOneBitSet ------------------------------------------------------------------------
+        // IsOnlyOneBitSet --------------------------------------------------------------------------------------------------------------------------
 
         [TestMethod]
         public void IsOnlyOneBitSet_Int32()
@@ -157,6 +157,84 @@ namespace VurdalakovTests
         public void IsOnlyOneBitSet_Enum_Int16()
         {
             TestEnumInt16.None.IsOnlyOneBitSet();
+        }
+
+        // GetMostSignificantBitSet -----------------------------------------------------------------------------------------------------------------
+
+        [TestMethod]
+        public void GetMostSignificantBitSet_Int32()
+        {
+            Test(1, 1);
+            Test(2, 2);
+            Test(4, 4);
+            Test(-2147483648, 0x80000000); // 0x80000000
+
+            Test(0, 0);
+            Test(3, 2);
+            Test(5, 4);
+            Test(-1, 0x80000000); // 0xFFFFFFFF
+
+            void Test(Int32 value, UInt32 expectedResult)
+            {
+                Assert.AreEqual(expectedResult, value.GetMostSignificantBitSet());
+            }
+        }
+
+        [TestMethod]
+        public void GetMostSignificantBitSet_UInt32()
+        {
+            Test(1, 1);
+            Test(2, 2);
+            Test(4, 4);
+            Test(0x80000000, 0x80000000);
+
+            Test(0, 0);
+            Test(3, 2);
+            Test(5, 4);
+            Test(0xFFFFFFFF, 0x80000000);
+
+            void Test(UInt32 value, UInt32 expectedResult)
+            {
+                Assert.AreEqual(expectedResult, value.GetMostSignificantBitSet());
+            }
+        }
+
+        [TestMethod]
+        public void GetMostSignificantBitSet_Int64()
+        {
+            Test(1, 1);
+            Test(2, 2);
+            Test(4, 4);
+            Test(-9223372036854775808L, 0x8000000000000000); // 0x8000000000000000
+
+            Test(0, 0);
+            Test(3, 2);
+            Test(5, 4);
+            Test(-1, 0x8000000000000000); // 0xFFFFFFFFFFFFFFFF
+
+            void Test(Int64 value, UInt64 expectedResult)
+            {
+                Assert.AreEqual(expectedResult, value.GetMostSignificantBitSet());
+            }
+        }
+
+        [TestMethod]
+        public void GetMostSignificantBitSet_UInt64()
+        {
+            Test(1, 1);
+            Test(2, 2);
+            Test(4, 4);
+            Test(0x8000000000000000, 0x8000000000000000);
+
+            Test(0, 0);
+            Test(3, 2);
+            Test(5, 4);
+            Test(0xFFFFFFFFFFFFFFFF, 0x8000000000000000);
+
+            void Test(UInt64 value, UInt64 expectedResult)
+            {
+                Assert.AreEqual(expectedResult, value.GetMostSignificantBitSet());
+            }
         }
     }
 }

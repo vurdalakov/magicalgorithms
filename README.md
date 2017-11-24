@@ -21,3 +21,17 @@ if (value.IsOnlyOneBitSet())
     Console.WriteLine($"Only one bit is set in {value}");
 }
 ```
+
+### GetMostSignificantBitSet
+
+Returns the most significant 1 bit (highest numbered element of a bit set).
+
+Supported types: `Int32`, `UInt32`, `Int64`, `UInt64`.
+
+```
+var value = 0x00010000;
+if (value.GetMostSignificantBitSet() <= 0x8000)
+{
+    Console.WriteLine($"High word is zero");
+}
+```
